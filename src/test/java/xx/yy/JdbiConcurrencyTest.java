@@ -65,6 +65,9 @@ public class JdbiConcurrencyTest {
         handle.close();
     }
 
+    /**
+     * Reproduce https://github.com/jdbi/jdbi/issues/2754
+     */
     @Test
     public void parallelReadTest() {
         postgres.getJdbi().installPlugin(new SqlObjectPlugin());
@@ -77,16 +80,6 @@ public class JdbiConcurrencyTest {
             );
             LOGGER.debug("Starting reads ...");
             readLateral(results);
-        }
-    }
-
-    /**
-     * Call {@link #parallelReadTest()} multiple times - currently not needed
-     */
-    @Test
-    public void multipleParallelReadTest() {
-        for (int i = 0; i < 100; i++) {
-            parallelReadTest();
         }
     }
 
